@@ -7,7 +7,6 @@ localhost
 
 [appserver]
 172.31.21.22
-172.31.24.252
 
 
 [appserver:vars]

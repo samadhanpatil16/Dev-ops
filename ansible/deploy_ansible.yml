@@ -1,0 +1,31 @@
+---
+
+- name: download package file
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  tasks:
+
+  - name: delete existing WAR file
+    file:
+       path: ./Helloworldwebapp.war
+       state: absent
+  - name: download from Artifactory
+    command: '/usr/bin/curl -uadmin:AP5RdgtGmQa2birCrX68ovkySnD -O "http://ec2-3-237-20-185.compute-1.amazonaws.com:8081/artifactory/training-repo/Helloworldwebapp.war"'
+
+- name: deploy WAR to Tomcat server
+  hosts: appserver
+  remote_user: ec2-user
+  gather_facts: false
+  become: true
+  tasks:
+  - name: stop tomcat server
+    command: '/usr/bin/sh /opt/tomcat/bin/shutdown.sh'
+  - name: deploy WAR to Tomcat
+    copy:
+       src: ./Helloworldwebapp.war
+       dest: /opt/tomcat/webapps/
+
+  - name: start tomcat
+    command: '/usr/bin/sh /opt/tomcat/bin/startup.sh'
