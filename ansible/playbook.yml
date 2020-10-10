@@ -1,0 +1,34 @@
+---
+
+
+- name: webserver pkg mgt
+  hosts: appserver
+  remote_user: ec2-user
+  gather_facts: false
+  become: true
+  tasks:
+
+  - name: package installation
+    package:
+       name: "{{package_name}}"
+       state: present
+  - name: manage service
+    service:
+       name: "{{package_name}}"
+       state: started
+       enabled: true
+
+  - import_tasks: task_list.yml
+
+
+- name: user mgt
+  hosts: jenkins
+  remote_user: ec2-user
+  gather_facts: false
+  become: true
+  tasks:
+  - name: mangae usr
+    user:
+       name: "{{user_name}}"
+       state: present
+

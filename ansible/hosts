@@ -1,0 +1,16 @@
+
+
+localhost
+
+[jenkins]
+172.31.24.252
+
+[appserver]
+172.31.21.22
+172.31.24.252
+
+
+[appserver:vars]
+
+package_name=httpd
+

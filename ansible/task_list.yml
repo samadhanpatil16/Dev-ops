@@ -1,0 +1,6 @@
+---
+
+ - name: task list
+   package:
+      name: "{{package_name}}" 
+      state: present
